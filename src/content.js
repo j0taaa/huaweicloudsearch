@@ -299,7 +299,7 @@
       }
       item.addEventListener("mouseenter", () => {
         selectedIndex = index;
-        renderList();
+        syncSelectedItem();
       });
       item.addEventListener("mousedown", (event) => {
         event.preventDefault();
@@ -310,6 +310,15 @@
         openItem(itemEntry);
       });
       list.appendChild(item);
+    });
+
+    syncSelectedItem();
+  }
+
+  function syncSelectedItem() {
+    const items = list.querySelectorAll(".hw-quicksearch-item:not(.hw-quicksearch-empty)");
+    items.forEach((item, index) => {
+      item.classList.toggle("selected", index === selectedIndex);
     });
   }
 
