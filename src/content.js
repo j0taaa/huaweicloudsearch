@@ -22,6 +22,8 @@
     { id: "tr-west-1", name: "Istanbul", keywords: ["turkey"] }
   ];
   const maxResults = 8;
+  const usageStorageKey = "hwQuickSearchUsage";
+  const recentStorageKey = "hwQuickSearchRecent";
 
   const overlay = document.createElement("div");
   overlay.className = "hw-quicksearch-overlay";
@@ -45,6 +47,81 @@
   let selectedIndex = 0;
   let filtered = [];
   const currentRegionContext = getCurrentRegionContext();
+
+  function readJsonStorage(key, fallbackValue) {
+    try {
+      const rawValue = window.localStorage.getItem(key);
+      if (!rawValue) return fallbackValue;
+      const parsedValue = JSON.parse(rawValue);
+      return parsedValue && typeof parsedValue === "object" ? parsedValue : fallbackValue;
+    } catch (error) {
+      return fallbackValue;
+    }
+  }
+
+  function writeJsonStorage(key, value) {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      // ignore storage write failures
+    }
+  }
+
+  function getItemKey(item) {
+    if (item.type === "region") {
+      return `region:${item.region.id}`;
+    }
+
+    return `service:${item.service.shortName}`;
+  }
+
+  function getUsageMap() {
+    return readJsonStorage(usageStorageKey, {});
+  }
+
+  function getRecentKeys() {
+    const recentKeys = readJsonStorage(recentStorageKey, []);
+    return Array.isArray(recentKeys) ? recentKeys : [];
+  }
+
+  function getUsageCount(item, usageMap = getUsageMap()) {
+    return Number(usageMap[getItemKey(item)] || 0);
+  }
+
+  function trackItemUsage(item) {
+    const itemKey = getItemKey(item);
+    const usageMap = getUsageMap();
+    usageMap[itemKey] = (usageMap[itemKey] || 0) + 1;
+    writeJsonStorage(usageStorageKey, usageMap);
+
+    const recentKeys = getRecentKeys().filter((key) => key !== itemKey);
+    recentKeys.unshift(itemKey);
+    writeJsonStorage(recentStorageKey, recentKeys.slice(0, maxResults));
+  }
+
+  function resolveItemFromKey(itemKey) {
+    if (itemKey.startsWith("service:")) {
+      const serviceShortName = itemKey.replace("service:", "");
+      const service = services.find((entry) => entry.shortName === serviceShortName);
+      return service ? { type: "service", score: 0, service } : null;
+    }
+
+    if (itemKey.startsWith("region:")) {
+      if (!currentRegionContext.canSwitchRegion) return null;
+      const regionId = itemKey.replace("region:", "");
+      if (regionId === currentRegionContext.currentRegionId) return null;
+      const region = regions.find((entry) => entry.id === regionId);
+      if (!region) return null;
+      const url = buildRegionSwitchUrl(region.id);
+      return url ? { type: "region", score: 0, region, url } : null;
+    }
+
+    return null;
+  }
+
+  function getRecentItems() {
+    return getRecentKeys().map(resolveItemFromKey).filter(Boolean).slice(0, maxResults);
+  }
 
   function tokenize(text) {
     return (text || "").toLowerCase().trim();
@@ -136,6 +213,7 @@
   }
 
   function findMatches(query) {
+    const usageMap = getUsageMap();
     const serviceMatches = services
       .map((service) => ({ service, score: scoreService(service, query) }))
       .filter((entry) => entry.score > 0)
@@ -157,7 +235,12 @@
       : [];
 
     return [...serviceMatches, ...regionMatches]
-      .sort((a, b) => b.score - a.score || getItemLabel(a).localeCompare(getItemLabel(b)))
+      .sort(
+        (a, b) =>
+          b.score - a.score ||
+          getUsageCount(b, usageMap) - getUsageCount(a, usageMap) ||
+          getItemLabel(a).localeCompare(getItemLabel(b))
+      )
       .slice(0, maxResults);
   }
 
@@ -223,6 +306,7 @@
   }
 
   function openItem(itemEntry) {
+    trackItemUsage(itemEntry);
     closePalette();
     if (itemEntry.type === "region") {
       window.location.href = itemEntry.url;
@@ -237,7 +321,10 @@
     overlay.classList.add("open");
     input.value = "";
     selectedIndex = 0;
-    filtered = findMatches("");
+    filtered = getRecentItems();
+    if (!filtered.length) {
+      filtered = findMatches("");
+    }
     renderList();
     setTimeout(() => input.focus(), 0);
   }
@@ -250,7 +337,10 @@
 
   input.addEventListener("input", (event) => {
     const query = tokenize(event.target.value);
-    filtered = findMatches(query);
+    filtered = query ? findMatches(query) : getRecentItems();
+    if (!query && !filtered.length) {
+      filtered = findMatches("");
+    }
     selectedIndex = 0;
     renderList();
   });
