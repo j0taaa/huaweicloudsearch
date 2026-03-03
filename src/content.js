@@ -42,6 +42,7 @@
 
   const input = overlay.querySelector(".hw-quicksearch-input");
   const list = overlay.querySelector(".hw-quicksearch-list");
+  const modal = overlay.querySelector(".hw-quicksearch-modal");
 
   let isOpen = false;
   let selectedIndex = 0;
@@ -300,7 +301,14 @@
         selectedIndex = index;
         renderList();
       });
-      item.addEventListener("click", () => openItem(itemEntry));
+      item.addEventListener("mousedown", (event) => {
+        event.preventDefault();
+      });
+      item.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openItem(itemEntry);
+      });
       list.appendChild(item);
     });
   }
@@ -379,6 +387,10 @@
     if (event.target === overlay) {
       closePalette();
     }
+  });
+
+  modal.addEventListener("click", (event) => {
+    event.stopPropagation();
   });
 
   document.addEventListener("keydown", (event) => {
