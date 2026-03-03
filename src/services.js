@@ -104,7 +104,7 @@ const SERVICE_CATALOG = [
   { name: "MetaStudio", shortName: "MetaStudio", keywords: ["metastudio", "digital human"] },
   { name: "Video Intelligent Analysis Service", shortName: "VIAS", keywords: ["vias", "video ai"] },
   { name: "Video On Demand", shortName: "VOD", keywords: ["vod", "on demand"] },
-  { name: "API Gateway", shortName: "APIG", keywords: ["apig", "api gateway"] },
+  { name: "API Gateway", shortName: "APIG", keywords: ["apig2", "apig", "api gateway"] },
   { name: "Cloud Service Engine", shortName: "CSE", keywords: ["cse", "service discovery"] },
   { name: "Distributed Cache Service (for Redis)", shortName: "DCS", keywords: ["dcs", "redis", "cache"] },
   { name: "Distributed Message Service", shortName: "DMS", keywords: ["dms", "message queue"] },
@@ -434,7 +434,8 @@ const SERVICE_URL_ALIASES = {
   "Virtual Private Cloud": "vpc",
   "Object Storage Service": "obs",
   "Simple Message Notification": "smn",
-  "Identity and Access Management": "iam"
+  "Identity and Access Management": "iam",
+  "API Gateway": "apig2"
 };
 
 function toServiceConsolePath(service) {
