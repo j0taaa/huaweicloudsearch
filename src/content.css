@@ -1,0 +1,113 @@
+.hw-quicksearch-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(4px);
+  z-index: 2147483647;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.hw-quicksearch-overlay.open {
+  display: flex;
+}
+
+.hw-quicksearch-modal {
+  width: min(640px, 92vw);
+  border-radius: 14px;
+  background: #0f172a;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 26px 55px rgba(2, 6, 23, 0.65);
+  color: #e2e8f0;
+  overflow: hidden;
+}
+
+.hw-quicksearch-search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.hw-quicksearch-search-icon {
+  color: #93c5fd;
+  font-size: 20px;
+}
+
+.hw-quicksearch-input {
+  all: unset;
+  flex: 1;
+  color: #f8fafc;
+  font-size: 17px;
+}
+
+.hw-quicksearch-input::placeholder {
+  color: #94a3b8;
+}
+
+.hw-quicksearch-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.hw-quicksearch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 8px;
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+.hw-quicksearch-item.selected,
+.hw-quicksearch-item:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: #f8fafc;
+}
+
+.hw-quicksearch-main {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.hw-quicksearch-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hw-quicksearch-shortname {
+  font-size: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  padding: 2px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hw-quicksearch-arrow {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.hw-quicksearch-empty {
+  justify-content: center;
+  color: #94a3b8;
+  cursor: default;
+}
+
+.hw-quicksearch-footer {
+  padding: 10px 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  color: #94a3b8;
+  font-size: 12px;
+}
