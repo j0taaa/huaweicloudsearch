@@ -1,82 +1,222 @@
-const HUAWEI_CLOUD_SERVICES = [
-  {
-    name: "Elastic Cloud Server",
-    shortName: "ECS",
-    keywords: ["virtual machine", "compute", "vm"],
+const SERVICE_CATALOG = [
+  { name: "MaaS", shortName: "MaaS", keywords: ["maas", "model as a service", "llm"] },
+  { name: "CloudTable Service", shortName: "CloudTable", keywords: ["cloudtable", "hbase", "wide column"] },
+  { name: "Data Ingestion Service", shortName: "DIS", keywords: ["dis", "stream", "ingestion"] },
+  { name: "Data Lake Insight", shortName: "DLI", keywords: ["dli", "sql", "spark"] },
+  { name: "Data Warehouse Service", shortName: "DWS", keywords: ["dws", "warehouse", "analytics"] },
+  { name: "DataArts Fabric", shortName: "DataArts Fabric", keywords: ["dataarts fabric", "fabric"] },
+  { name: "DataArts Insight", shortName: "DataArts Insight", keywords: ["dataarts insight", "bi"] },
+  { name: "DataArts Lake Formation", shortName: "DLF", keywords: ["dlf", "lake formation"] },
+  { name: "DataArts Studio(DGC)", shortName: "DGC", keywords: ["dgc", "data governance"] },
+  { name: "MapReduce Service", shortName: "MRS", keywords: ["mrs", "hadoop", "mapreduce"] },
+  { name: "Application Operations Management", shortName: "AOM", keywords: ["aom", "ops", "application monitoring"] },
+  { name: "Application Performance Management", shortName: "APM", keywords: ["apm", "tracing", "performance"] },
+  { name: "ServiceStage", shortName: "ServiceStage", keywords: ["servicestage", "microservice"] },
+  { name: "Blockchain Service", shortName: "BCS", keywords: ["bcs", "blockchain"] },
+  { name: "Web3 Node Engine Service", shortName: "NES", keywords: ["nes", "web3", "node engine"] },
+  { name: "Application & Data Integration platform ROMA Connect", shortName: "ROMA Connect", keywords: ["roma", "integration", "connect"] },
+  { name: "Cognitive Engagement Center", shortName: "CEC", keywords: ["cec", "contact center", "engagement"] },
+  { name: "HUAWEI CLOUD Meeting", shortName: "Meeting", keywords: ["meeting", "conference"] },
+  { name: "InnoStage Workbench(HaydnCSF)", shortName: "HaydnCSF", keywords: ["haydncsf", "innostage"] },
+  { name: "Workspace", shortName: "Workspace", keywords: ["workspace", "desktop", "office"] },
+  { name: "KooMessage", shortName: "KooMessage", keywords: ["koomessage", "message"] },
+  { name: "Message & SMS", shortName: "MSGSMS", keywords: ["sms", "message", "msgsms"] },
+  { name: "Auto Scaling", shortName: "AS", keywords: ["auto scaling", "as", "scale"] },
+  { name: "Bare Metal Server", shortName: "BMS", keywords: ["bms", "bare metal"] },
+  { name: "Cloud Data Center", shortName: "CDC", keywords: ["cdc", "cloud data center"] },
+  { name: "Cloud Phone Host", shortName: "CPH", keywords: ["cph", "cloud phone"] },
+  { name: "Dedicated Cloud", shortName: "DeC", keywords: ["dec", "dedicated cloud"] },
+  { name: "Dedicated Host", shortName: "DeH", keywords: ["deh", "dedicated host"] },
+  { name: "Elastic Cloud Server", shortName: "ECS", keywords: ["ecs", "vm", "instance"] },
+  { name: "FunctionGraph", shortName: "FG", keywords: ["functiongraph", "faas", "serverless"] },
+  { name: "Image Management Service", shortName: "IMS", keywords: ["ims", "image", "ami"] },
+  { name: "Application Service Mesh", shortName: "ASM", keywords: ["asm", "service mesh", "istio"] },
+  { name: "Cloud Container Engine", shortName: "CCE", keywords: ["cce", "kubernetes", "cluster"] },
+  { name: "Cloud Container Instance", shortName: "CCI", keywords: ["cci", "container instance", "serverless container"] },
+  { name: "Cloud Container Instance 2.0", shortName: "CCI2.0", keywords: ["cci2.0", "cci 2.0", "container instance 2"] },
+  { name: "Intelligent EdgeFabric", shortName: "IEF", keywords: ["ief", "edge", "edgefabric"] },
+  { name: "SoftWare Repository for Container", shortName: "SWR", keywords: ["swr", "registry", "container image"] },
+  { name: "Ubiquitous Cloud Native Service", shortName: "UCS", keywords: ["ucs", "cloud native"] },
+  { name: "CDN and Security", shortName: "CDN", keywords: ["cdn", "acceleration", "security"] },
+  { name: "CloudPond", shortName: "CloudPond", keywords: ["cloudpond", "hybrid"] },
+  { name: "Content Delivery Network", shortName: "CDN", keywords: ["content delivery", "cdn", "edge cache"] },
+  { name: "Data Admin Service", shortName: "DAS", keywords: ["das", "db admin"] },
+  { name: "Data Replication Service", shortName: "DRS", keywords: ["drs", "replication", "sync"] },
+  { name: "Distributed Database Middleware", shortName: "DDM", keywords: ["ddm", "database middleware", "sharding"] },
+  { name: "Document Database Service", shortName: "DDS", keywords: ["dds", "mongodb"] },
+  { name: "GaussDB", shortName: "GaussDB", keywords: ["gaussdb", "gauss"] },
+  { name: "GeminiDB", shortName: "GeminiDB", keywords: ["geminidb", "gemini"] },
+  { name: "Relational Database Service", shortName: "RDS", keywords: ["rds", "mysql", "postgresql"] },
+  { name: "TaurusDB", shortName: "TaurusDB", keywords: ["taurusdb", "taurus"] },
+  { name: "UGO", shortName: "UGO", keywords: ["ugo", "db migration"] },
+  { name: "Dedicated Computing Cluster", shortName: "DCC", keywords: ["dcc", "dedicated cluster"] },
+  { name: "Cloud Application Engine", shortName: "CAE", keywords: ["cae", "application engine"] },
+  { name: "CodeArts", shortName: "CodeArts", keywords: ["codearts", "devops"] },
+  { name: "CodeArts Artifact", shortName: "CodeArts Artifact", keywords: ["artifact", "package"] },
+  { name: "CodeArts Build", shortName: "CodeArts Build", keywords: ["build", "ci"] },
+  { name: "CodeArts Check", shortName: "CodeArts Check", keywords: ["check", "code scan"] },
+  { name: "CodeArts Deploy", shortName: "CodeArts Deploy", keywords: ["deploy", "cd"] },
+  { name: "CodeArts Governance", shortName: "CodeArts Governance", keywords: ["governance", "quality"] },
+  { name: "CodeArts PerfTest", shortName: "CodeArts PerfTest", keywords: ["perftest", "load test"] },
+  { name: "CodeArts Pipeline", shortName: "CodeArts Pipeline", keywords: ["pipeline", "workflow"] },
+  { name: "CodeArts Repo", shortName: "CodeArts Repo", keywords: ["repo", "git"] },
+  { name: "CodeArts Req", shortName: "CodeArts Req", keywords: ["req", "requirements"] },
+  { name: "CodeArts TestPlan", shortName: "CodeArts TestPlan", keywords: ["testplan", "test management"] },
+  { name: "Huawei Cloud Astro Zero", shortName: "Astro Zero", keywords: ["astro zero", "low code"] },
+  { name: "Cloud Search Service", shortName: "CSS", keywords: ["css", "elasticsearch", "search"] },
+  { name: "Content Moderation", shortName: "MODERATION", keywords: ["moderation", "content moderation"] },
+  { name: "Conversational Bot Service", shortName: "CBS", keywords: ["cbs", "chatbot"] },
+  { name: "Face Recognition Service", shortName: "FRS", keywords: ["frs", "face recognition"] },
+  { name: "Graph Engine Service", shortName: "GES", keywords: ["ges", "graph database"] },
+  { name: "Huawei HiLens", shortName: "HiLens", keywords: ["hilens", "vision ai"] },
+  { name: "Identity Verification Service", shortName: "IVS", keywords: ["ivs", "identity verification"] },
+  { name: "Image Recognition", shortName: "Image Recognition", keywords: ["image recognition", "vision"] },
+  { name: "ModelArts", shortName: "ModelArts", keywords: ["modelarts", "ml"] },
+  { name: "ModelArts Studio", shortName: "ModelArts Studio", keywords: ["modelarts studio", "ai studio"] },
+  { name: "Optical Character Recognition", shortName: "OCR", keywords: ["ocr", "text recognition"] },
+  { name: "Speech Interaction Service", shortName: "SIS", keywords: ["sis", "speech"] },
+  { name: "Flexus CCI", shortName: "Flexus CCI", keywords: ["flexus cci", "flexus container"] },
+  { name: "Flexus L Instance", shortName: "Flexus L", keywords: ["flexus l", "instance l"] },
+  { name: "Flexus RDS", shortName: "Flexus RDS", keywords: ["flexus rds", "managed database"] },
+  { name: "Flexus X Instance", shortName: "Flexus X", keywords: ["flexus x", "instance x"] },
+  { name: "Global SIM Link", shortName: "GSL", keywords: ["gsl", "sim", "iot connectivity"] },
+  { name: "IoT Device Management", shortName: "IoTDM", keywords: ["iotdm", "device management"] },
+  { name: "IoTDA", shortName: "IoTDA", keywords: ["iotda", "iot access"] },
+  { name: "KooGallery", shortName: "KooGallery", keywords: ["koogallery", "marketplace"] },
+  { name: "Cloud Eye", shortName: "CES", keywords: ["ces", "monitoring", "alarm"] },
+  { name: "Cloud Operations Center", shortName: "COC", keywords: ["coc", "operations center"] },
+  { name: "Cloud Trace Service", shortName: "CTS", keywords: ["cts", "audit trail"] },
+  { name: "Config", shortName: "Config", keywords: ["config", "compliance"] },
+  { name: "IAM Identity Center", shortName: "IAM Identity Center", keywords: ["identity center", "sso"] },
+  { name: "Identity and Access Management", shortName: "IAM", keywords: ["iam", "user", "role"] },
+  { name: "Log Tank Service", shortName: "LTS", keywords: ["lts", "logs"] },
+  { name: "OneAccess", shortName: "OneAccess", keywords: ["oneaccess", "zero trust"] },
+  { name: "Optimization Advisor", shortName: "OA", keywords: ["optimization advisor", "oa"] },
+  { name: "Organizations", shortName: "Organizations", keywords: ["organizations", "org"] },
+  { name: "Resource Access Manager", shortName: "RAM", keywords: ["ram", "resource share"] },
+  { name: "Resource Formation Service", shortName: "RFS", keywords: ["rfs", "iac", "resource formation"] },
+  { name: "Resource Governance Center", shortName: "RGC", keywords: ["rgc", "governance center"] },
+  { name: "Simple Message Notification", shortName: "SMN", keywords: ["smn", "notification"] },
+  { name: "Tag Management Service", shortName: "TMS", keywords: ["tms", "tags"] },
+  { name: "Industry Video Management Service", shortName: "IVM", keywords: ["ivm", "video management"] },
+  { name: "Live", shortName: "Live", keywords: ["live", "streaming"] },
+  { name: "Media Processing Center", shortName: "MPC", keywords: ["mpc", "transcoding"] },
+  { name: "MetaStudio", shortName: "MetaStudio", keywords: ["metastudio", "digital human"] },
+  { name: "Video Intelligent Analysis Service", shortName: "VIAS", keywords: ["vias", "video ai"] },
+  { name: "Video On Demand", shortName: "VOD", keywords: ["vod", "on demand"] },
+  { name: "API Gateway", shortName: "APIG", keywords: ["apig", "api gateway"] },
+  { name: "Cloud Service Engine", shortName: "CSE", keywords: ["cse", "service discovery"] },
+  { name: "Distributed Cache Service (for Redis)", shortName: "DCS", keywords: ["dcs", "redis", "cache"] },
+  { name: "Distributed Message Service", shortName: "DMS", keywords: ["dms", "message queue"] },
+  { name: "Distributed Message Service (for Kafka)", shortName: "DMS Kafka", keywords: ["kafka", "dms kafka"] },
+  { name: "Distributed Message Service (for RabbitMQ)", shortName: "DMS RabbitMQ", keywords: ["rabbitmq", "dms rabbitmq"] },
+  { name: "Distributed Message Service (for RocketMQ)", shortName: "DMS RocketMQ", keywords: ["rocketmq", "dms rocketmq"] },
+  { name: "EventGrid", shortName: "EventGrid", keywords: ["eventgrid", "event bus"] },
+  { name: "Multi-Site High Availability Service", shortName: "MSHA", keywords: ["msha", "high availability"] },
+  { name: "Cloud Data Migration", shortName: "CDM", keywords: ["cdm", "data migration"] },
+  { name: "Migration Center", shortName: "Migration Center", keywords: ["migration center", "migration"] },
+  { name: "Object Storage Migration Service", shortName: "OMS", keywords: ["oms", "object migration"] },
+  { name: "Server Migration Service", shortName: "SMS", keywords: ["sms", "server migration"] },
+  { name: "Cloud Connect", shortName: "CC", keywords: ["cloud connect", "cc"] },
+  { name: "Direct Connect", shortName: "DC", keywords: ["direct connect", "dc"] },
+  { name: "Domain Name Service", shortName: "DNS", keywords: ["dns", "domain"] },
+  { name: "Elastic IP", shortName: "EIP", keywords: ["eip", "public ip"] },
+  { name: "Elastic Load Balance", shortName: "ELB", keywords: ["elb", "load balancer"] },
+  { name: "Enterprise Router", shortName: "ER", keywords: ["enterprise router", "er"] },
+  { name: "Enterprise Switch", shortName: "ESW", keywords: ["enterprise switch", "esw"] },
+  { name: "Global Accelerator", shortName: "GA", keywords: ["global accelerator", "ga"] },
+  { name: "NAT Gateway", shortName: "NAT", keywords: ["nat", "nat gateway"] },
+  { name: "Virtual Private Cloud", shortName: "VPC", keywords: ["vpc", "network", "subnet"] },
+  { name: "Virtual Private Network", shortName: "VPN", keywords: ["vpn", "ipsec"] },
+  { name: "VPC Endpoint", shortName: "VPCEP", keywords: ["vpcep", "private endpoint"] },
+  { name: "Cloud Bastion Host", shortName: "CBH", keywords: ["cbh", "bastion"] },
+  { name: "Cloud Certificate & Manager", shortName: "CCM", keywords: ["ccm", "certificate"] },
+  { name: "Cloud Firewall", shortName: "CFW", keywords: ["cfw", "firewall"] },
+  { name: "Container Guard Service", shortName: "CGS", keywords: ["cgs", "container security"] },
+  { name: "Data Encryption Workshop", shortName: "DEW", keywords: ["dew", "kms", "encryption"] },
+  { name: "Data Security Center", shortName: "DSC", keywords: ["dsc", "data security"] },
+  { name: "Database Security Service", shortName: "DBSS", keywords: ["dbss", "database security"] },
+  { name: "DDoS Mitigation", shortName: "Anti-DDoS", keywords: ["anti-ddos", "ddos"] },
+  { name: "Edge Security", shortName: "EdgeSec", keywords: ["edgesec", "edge security"] },
+  { name: "Host Security Service", shortName: "HSS", keywords: ["hss", "host security"] },
+  { name: "SecMaster", shortName: "SecMaster", keywords: ["secmaster", "soc"] },
+  { name: "Web Application Firewall", shortName: "WAF", keywords: ["waf", "web firewall"] },
+  { name: "Cloud Backup and Recovery", shortName: "CBR", keywords: ["cbr", "backup"] },
+  { name: "Cloud Server Backup Service", shortName: "CSBS", keywords: ["csbs", "server backup"] },
+  { name: "Data Express Service", shortName: "DES", keywords: ["des", "data express"] },
+  { name: "Dedicated Distributed Storage Service", shortName: "DSS", keywords: ["dss", "distributed storage"] },
+  { name: "Dedicated OBS", shortName: "Dedicated OBS", keywords: ["dedicated obs", "obs dedicated"] },
+  { name: "Elastic Volume Service", shortName: "EVS", keywords: ["evs", "block storage"] },
+  { name: "Key-Value Storage Service", shortName: "KVS", keywords: ["kvs", "key value"] },
+  { name: "KooDrive", shortName: "KooDrive", keywords: ["koodrive", "cloud drive"] },
+  { name: "Object Storage Service", shortName: "OBS", keywords: ["obs", "object storage", "bucket"] },
+  { name: "Scalable File Service", shortName: "SFS", keywords: ["sfs", "file storage"] },
+  { name: "Storage Disaster Recovery Service", shortName: "SDRS", keywords: ["sdrs", "disaster recovery"] },
+  { name: "Volume Backup Service", shortName: "VBS", keywords: ["vbs", "volume backup"] }
+];
+
+const SERVICE_OVERRIDES = {
+  "Elastic Cloud Server": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/ECS.png",
-    url: "https://sa-brazil-1-console.huaweicloud.com/ecm/?locale=en-us&agencyId=f04e1d3b40c34c13aa9f14118f7217e5&region=sa-brazil-1#/ecs/manager/vmList"
+    url: "https://sa-brazil-1-console.huaweicloud.com/ecm/?locale=en-us&region=sa-brazil-1#/ecs/manager/vmList"
   },
-  {
-    name: "Virtual Private Cloud",
-    shortName: "VPC",
-    keywords: ["network", "subnet", "security group"],
+  "Virtual Private Cloud": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/VPC.png",
     url: "https://console.huaweicloud.com/vpc/?locale=en-us"
   },
-  {
-    name: "Object Storage Service",
-    shortName: "OBS",
-    keywords: ["bucket", "storage", "files"],
+  "Object Storage Service": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/OBS.png",
     url: "https://console.huaweicloud.com/obs/?locale=en-us"
   },
-  {
-    name: "Relational Database Service",
-    shortName: "RDS",
-    keywords: ["mysql", "postgresql", "database"],
+  "Relational Database Service": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/RDSforMySQL.png",
     url: "https://console.huaweicloud.com/rds/?locale=en-us"
   },
-  {
-    name: "Cloud Container Engine",
-    shortName: "CCE",
-    keywords: ["kubernetes", "containers", "cluster"],
+  "Cloud Container Engine": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCE.png",
     url: "https://console.huaweicloud.com/cce2.0/?locale=en-us"
   },
-  {
-    name: "Cloud Container Instance",
-    shortName: "CCI",
-    keywords: ["serverless", "containers", "kubernetes"],
+  "Cloud Container Instance": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCI.png",
     url: "https://console.huaweicloud.com/cci/?locale=en-us"
   },
-  {
-    name: "Simple Message Notification",
-    shortName: "SMN",
-    keywords: ["notification", "pubsub", "topics"],
+  "Cloud Container Instance 2.0": {
+    iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCI.png",
+    url: "https://console.huaweicloud.com/cci2.0/?locale=en-us"
+  },
+  "Simple Message Notification": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/SMN.png",
     url: "https://console.huaweicloud.com/smn/?locale=en-us"
   },
-  {
-    name: "Identity and Access Management",
-    shortName: "IAM",
-    keywords: ["permissions", "users", "roles"],
+  "Identity and Access Management": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/IAM.png",
     url: "https://console.huaweicloud.com/iam/?locale=en-us"
   },
-  {
-    name: "Cloud Backup and Recovery",
-    shortName: "CBR",
-    keywords: ["backup", "recovery", "snapshot"],
+  "Cloud Backup and Recovery": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/CBR.png",
     url: "https://console.huaweicloud.com/cbr/?locale=en-us"
   },
-  {
-    name: "Cloud Eye",
-    shortName: "CES",
-    keywords: ["monitoring", "metrics", "alarms"],
+  "Cloud Eye": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/CES.png",
     url: "https://console.huaweicloud.com/ces/?locale=en-us"
   },
-  {
-    name: "Distributed Cache Service",
-    shortName: "DCS",
-    keywords: ["redis", "cache", "memory"],
+  "Distributed Cache Service (for Redis)": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/Redis.png",
     url: "https://console.huaweicloud.com/dcs/?locale=en-us"
   }
-];
+};
+
+const HUAWEI_CLOUD_SERVICES = SERVICE_CATALOG.map((service) => {
+  const override = SERVICE_OVERRIDES[service.name] || {};
+
+  return {
+    name: service.name,
+    shortName: service.shortName,
+    keywords: service.keywords,
+    iconUrl: override.iconUrl || "",
+    url: override.url || "https://console.huaweicloud.com/?locale=en-us"
+  };
+});
 
 if (typeof window !== "undefined") {
   window.HUAWEI_CLOUD_SERVICES = HUAWEI_CLOUD_SERVICES;
