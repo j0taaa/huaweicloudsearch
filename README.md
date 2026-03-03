@@ -7,6 +7,8 @@ A Chrome extension that adds a Raycast-style command bar to Huawei Cloud pages.
 - Press **Ctrl+K** (or **⌘+K** on macOS) anywhere on `*.huaweicloud.com`.
 - Opens a centered **light-mode** search palette with keyboard navigation.
 - Search by full service name (for example, `Elastic Cloud Server`) or short name (`ECS`).
+- Search regions (for example, `santiago`, `sao paulo`) to switch the current page to another region.
+- Region suggestions only appear when the current console page is region-aware (global pages keep service-only results).
 - Shows Huawei Cloud official product icons in search results.
 - Hit **Enter** to navigate directly to the selected Huawei Cloud service page.
 
