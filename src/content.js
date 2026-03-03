@@ -82,6 +82,10 @@
       item.dataset.index = String(index);
       item.innerHTML = `
         <div class="hw-quicksearch-main">
+          <span class="hw-quicksearch-icon-wrap">
+            ${service.iconUrl ? `<img class="hw-quicksearch-service-icon" src="${service.iconUrl}" alt="${service.shortName} icon" loading="lazy" referrerpolicy="no-referrer" />` : ""}
+            <span class="hw-quicksearch-icon-fallback">${service.shortName.slice(0, 1)}</span>
+          </span>
           <span class="hw-quicksearch-name">${service.name}</span>
           <span class="hw-quicksearch-shortname">${service.shortName}</span>
         </div>
