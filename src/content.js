@@ -112,6 +112,29 @@
     return currentUrl.split(currentRegionId).join(targetRegionId);
   }
 
+  function buildServiceUrl(serviceUrl) {
+    const { currentRegionId, canSwitchRegion } = currentRegionContext;
+    if (!canSwitchRegion || !currentRegionId) {
+      return serviceUrl;
+    }
+
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(serviceUrl);
+    } catch (error) {
+      return serviceUrl;
+    }
+
+    if (parsedUrl.hostname === "console.huaweicloud.com") {
+      parsedUrl.hostname = `${currentRegionId}-console.huaweicloud.com`;
+    } else if (/^[a-z0-9-]+-console\.huaweicloud\.com$/i.test(parsedUrl.hostname)) {
+      parsedUrl.hostname = `${currentRegionId}-console.huaweicloud.com`;
+    }
+
+    parsedUrl.searchParams.set("region", currentRegionId);
+    return parsedUrl.toString();
+  }
+
   function findMatches(query) {
     const serviceMatches = services
       .map((service) => ({ service, score: scoreService(service, query) }))
@@ -206,7 +229,7 @@
       return;
     }
 
-    window.location.href = itemEntry.service.url;
+    window.location.href = buildServiceUrl(itemEntry.service.url);
   }
 
   function openPalette() {
