@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Huawei Cloud Quick Search",
+  "description": "Raycast-like Ctrl+K search overlay for Huawei Cloud services.",
+  "version": "1.0.0",
+  "permissions": [],
+  "host_permissions": [
+    "https://*.huaweicloud.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.huaweicloud.com/*"
+      ],
+      "js": [
+        "src/services.js",
+        "src/content.js"
+      ],
+      "css": [
+        "src/content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
