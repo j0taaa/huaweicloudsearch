@@ -214,6 +214,219 @@ const SERVICE_OVERRIDES = {
   }
 };
 
+const OFFICIAL_ICON_URL_BY_TOKEN = {
+  "AAD": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/AAD.png",
+  "AOM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/AOM.png",
+  "APIG": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/APIG.png",
+  "APM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/APM.png",
+  "AS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/AS.png",
+  "asr": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/asr.png",
+  "AstroZero": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/AstroZero.png",
+  "BCS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Blockchain/BCS.png",
+  "BMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/BMS.png",
+  "CAE": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CAE.png",
+  "CBH": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/CBH.png",
+  "CBR": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/CBR.png",
+  "cbsqa": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/cbsqa.png",
+  "CC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/CC.png",
+  "CCE": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCE.png",
+  "CCI": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCI.png",
+  "CDM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Migration/CDM.png",
+  "CDN": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ContentDeliveryEdgeComputing/CDN.png",
+  "CEC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/CEC.png",
+  "CES": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/CES.png",
+  "CFW": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/CFW.png",
+  "CloudDC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/CloudDC.svg",
+  "COC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/COC.png",
+  "CodeArts": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArts.png",
+  "CodeArtsArtifact": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsArtifact.png",
+  "CodeArtsBuild": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsBuild.png",
+  "CodeArtsCheck": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsCheck.png",
+  "CodeArtsDeploy": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsDeploy.png",
+  "CodeArtsPerfTest": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsPerfTest.png",
+  "CodeArtsPipeline": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsPipeline.png",
+  "CodeArtsRepo": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsRepo.png",
+  "CodeArtsReq": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsReq.png",
+  "CodeArtsTestPlan": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/CodeArtsTestPlan.png",
+  "CPH": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/CPH.png",
+  "CS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/CS.png",
+  "CSBS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/CSBS.png",
+  "CSE": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/CSE.png",
+  "CSS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/CSS.png",
+  "CTS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/CTS.png",
+  "DAS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/DAS.png",
+  "DataArts": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/DataArts.png",
+  "DataArtsFabric": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/DataArtsFabric.png",
+  "DBSS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/DBSS.png",
+  "DC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/DC.png",
+  "dcc": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/dcc.png",
+  "DDM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/DDM.png",
+  "DDS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/DDS.png",
+  "DeH": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/DeH.png",
+  "DES": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/DES.png",
+  "DevSecurity": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/DevSecurity.png",
+  "DEW": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/DEW.png",
+  "DIS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/DIS.png",
+  "DLI": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/DLI.png",
+  "DLV": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/DLV.png",
+  "DMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/DMS.png",
+  "DNS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/DNS.png",
+  "DRS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/DRS.png",
+  "DSC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/DSC.png",
+  "DSS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/DSS.png",
+  "DWS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/DWS.png",
+  "ECS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/ECS.png",
+  "EDCM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/EDCM.png",
+  "EdgeSec": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/EdgeSec.png",
+  "eihealth": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/eihealth.png",
+  "EIP": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/EIP.png",
+  "ELB": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/ELB.png",
+  "ER": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/ER.png",
+  "ESW": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/ESW.png",
+  "EVS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/EVS.png",
+  "FECSL": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/FECSL.png",
+  "FECSX": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/FECSX.png",
+  "Flexus": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/Flexus.png",
+  "FRDS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/FRDS.png",
+  "FunctionGraph": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/FunctionGraph.png",
+  "GA": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/GA.png",
+  "GACS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/GACS.png",
+  "GaussDB": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/GaussDB.png",
+  "GaussDBforMySQL": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/GaussDBforMySQL.png",
+  "GaussDBfornosql": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/GaussDBfornosql.png",
+  "ges": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/ges.png",
+  "GSL": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/InternetofThings/GSL.png",
+  "hilens": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/hilens.png",
+  "HSS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/HSS.png",
+  "huaweicloudstack": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/HuaweiCloudStack/huaweicloudstack.png",
+  "IAM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/IAM.png",
+  "IEC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ContentDeliveryEdgeComputing/IEC.png",
+  "IES": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ContentDeliveryEdgeComputing/IES.png",
+  "Image": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/Image.png",
+  "IMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/IMS.png",
+  "IoTDA": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/InternetofThings/IoTDA.png",
+  "IoTDM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/InternetofThings/IoTDM.png",
+  "IVM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/IVM.png",
+  "Kafka": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/Kafka.png",
+  "KooDrive": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/aPaaS/KooDrive.png",
+  "KooMessage": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/aPaaS/KooMessage.png",
+  "KooPhone": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/aPaaS/KooPhone.png",
+  "Live": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/MediaServices/Live.png",
+  "LTS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/LTS.png",
+  "MapReduce": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Analytics/MapReduce.png",
+  "MAS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/MAS.png",
+  "Meeting": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/Meeting.png",
+  "Memcached": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/Memcached.png",
+  "MetaStudio": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/MediaServices/MetaStudio.png",
+  "MGC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Migration/MGC.png",
+  "ModelArts": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/ModelArts.png",
+  "Moderation": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/Moderation.png",
+  "MPC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/MediaServices/MPC.png",
+  "MSGSMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/MSGSMS.png",
+  "NAT": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/NAT.png",
+  "OA": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/OA.png",
+  "OBS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/OBS.png",
+  "OCR": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/OCR.png",
+  "OMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Migration/OMS.png",
+  "Organizations": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/Organizations.png",
+  "pangu": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/pangu.png",
+  "RabbitMQ": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/RabbitMQ.png",
+  "RAM": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/RAM.png",
+  "RDSforMariaDB": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/RDSforMariaDB.png",
+  "RDSforMySQL": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/RDSforMySQL.png",
+  "RDSforPostgreSQL": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/RDSforPostgreSQL.png",
+  "Redis": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/Redis.png",
+  "RFS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/RFS.png",
+  "RGC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/RGC.png",
+  "RMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/RMS.png",
+  "ROCKETMQ": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/ROCKETMQ.png",
+  "ROMAConnect": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/ROMAConnect.png",
+  "SDRS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/SDRS.png",
+  "SecMaster": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/SecMaster.png",
+  "ServiceStage": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/DeveloperServices/ServiceStage.png",
+  "SFS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/SFS.png",
+  "SFSTurbo": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/SFSTurbo.png",
+  "SMN": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/SMN.png",
+  "SMS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Migration/SMS.png",
+  "SSL": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/SSL.png",
+  "SWR": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/SWR.png",
+  "UCS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/UCS.png",
+  "UGO": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/UGO.png",
+  "VBS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/VBS.png",
+  "VIAS": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/AI/VIAS.png",
+  "VOD": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/MediaServices/VOD.png",
+  "VPC": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/VPC.png",
+  "VPCEP": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/VPCEP.png",
+  "VPN": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/VPN.png",
+  "WAF": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/SecurityCompliance/WAF.png",
+  "WeLink": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/WeLink.png",
+  "Workspace": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/BusinessApplications/Workspace.png",
+  "WSA": "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ContentDeliveryEdgeComputing/WSA.png"
+};
+
+const SERVICE_ICON_TOKEN_ALIASES = {
+  "Application Service Mesh": "CCE",
+  "Cloud Data Center": "CloudDC",
+  "CloudTable Service": "CloudTable",
+  "CloudPond": "IES",
+  "CodeArts Governance": "CodeArtsReq",
+  "Config": "RMS",
+  "Conversational Bot Service": "cbsqa",
+  "DataArts Insight": "DataArts",
+  "DataArts Lake Formation": "DLV",
+  "DataArts Studio(DGC)": "DataArts",
+  "Dedicated Cloud": "DeH",
+  "Distributed Cache Service (for Redis)": "Redis",
+  "Distributed Message Service (for Kafka)": "DMSforKafka",
+  "Distributed Message Service (for RabbitMQ)": "DMSforRabbitMQ",
+  "Distributed Message Service (for RocketMQ)": "DMSforRocketMQ",
+  "Face Recognition Service": "Face",
+  "Flexus CCI": "CCI",
+  "Flexus L Instance": "FECSL",
+  "Flexus RDS": "FRDS",
+  "Flexus X Instance": "FECSX",
+  "IAM Identity Center": "IdentityCenter",
+  "Identity Verification Service": "IVM",
+  "Image Recognition": "Image",
+  "InnoStage Workbench(HaydnCSF)": "EDCM",
+  "Intelligent EdgeFabric": "IES",
+  "KooGallery": "CloudEco",
+  "MaaS": "ModelArts",
+  "MapReduce Service": "MapReduce",
+  "Migration Center": "SMS",
+  "ModelArts Studio": "ModelArts",
+  "Multi-Site High Availability Service": "MSHA",
+  "OneAccess": "OA",
+  "Relational Database Service": "RDSforMySQL",
+  "Speech Interaction Service": "asr",
+  "Tag Management Service": "TMS",
+  "TaurusDB": "GaussDBforMySQL",
+  "Web3 Node Engine Service": "BCS"
+};
+
+const FALLBACK_SERVICE_ICON_URL = "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/Flexus.png";
+
+function resolveServiceIconUrl(service) {
+  const aliasToken = SERVICE_ICON_TOKEN_ALIASES[service.name];
+
+  if (aliasToken && OFFICIAL_ICON_URL_BY_TOKEN[aliasToken]) {
+    return OFFICIAL_ICON_URL_BY_TOKEN[aliasToken];
+  }
+
+  const normalizedShortName = (service.shortName || "")
+    .replace(/[^a-zA-Z0-9]+/g, "")
+    .toLowerCase();
+
+  const normalizedName = service.name.replace(/[^a-zA-Z0-9]+/g, "").toLowerCase();
+
+  const tokenMatch = Object.entries(OFFICIAL_ICON_URL_BY_TOKEN).find(([token]) => {
+    const normalizedToken = token.toLowerCase();
+    return normalizedToken === normalizedShortName || normalizedToken === normalizedName;
+  });
+
+  return tokenMatch ? tokenMatch[1] : FALLBACK_SERVICE_ICON_URL;
+}
+
 const SERVICE_URL_ALIASES = {
   "Distributed Cache Service (for Redis)": "dcs",
   "Data Lake Insight": "dli",
@@ -246,9 +459,7 @@ function buildDefaultServiceUrl(service) {
 }
 
 function buildDefaultIcon(service) {
-  const label = (service.shortName || service.name || "?").trim().slice(0, 2).toUpperCase();
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#e5eefc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1d4ed8" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="700">${label}</text></svg>`;
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+  return resolveServiceIconUrl(service);
 }
 
 const HUAWEI_CLOUD_SERVICES = SERVICE_CATALOG.map((service) => {
