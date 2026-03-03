@@ -155,54 +155,62 @@ const SERVICE_CATALOG = [
   { name: "Volume Backup Service", shortName: "VBS", keywords: ["vbs", "volume backup"] }
 ];
 
+const DEFAULT_CONSOLE_REGION = "sa-brazil-1";
+
+function buildRegionConsoleUrl(path, hash = "") {
+  const normalizedPath = path.replace(/^\/+/, "");
+  const normalizedHash = hash ? `#${hash.replace(/^#/, "")}` : "";
+  return `https://${DEFAULT_CONSOLE_REGION}-console.huaweicloud.com/${normalizedPath}/?locale=en-us&region=${DEFAULT_CONSOLE_REGION}${normalizedHash}`;
+}
+
 const SERVICE_OVERRIDES = {
   "Elastic Cloud Server": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Compute/ECS.png",
-    url: "https://sa-brazil-1-console.huaweicloud.com/ecm/?locale=en-us&region=sa-brazil-1#/ecs/manager/vmList"
+    url: buildRegionConsoleUrl("ecm", "/ecs/manager/vmList")
   },
   "Virtual Private Cloud": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Networking/VPC.png",
-    url: "https://console.huaweicloud.com/vpc/?locale=en-us"
+    url: buildRegionConsoleUrl("vpc")
   },
   "Object Storage Service": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/OBS.png",
-    url: "https://console.huaweicloud.com/obs/?locale=en-us"
+    url: buildRegionConsoleUrl("obs")
   },
   "Relational Database Service": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Databases/RDSforMySQL.png",
-    url: "https://console.huaweicloud.com/rds/?locale=en-us"
+    url: buildRegionConsoleUrl("rds")
   },
   "Cloud Container Engine": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCE.png",
-    url: "https://console.huaweicloud.com/cce2.0/?locale=en-us"
+    url: buildRegionConsoleUrl("cce2.0")
   },
   "Cloud Container Instance": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCI.png",
-    url: "https://console.huaweicloud.com/cci/?locale=en-us"
+    url: buildRegionConsoleUrl("cci")
   },
   "Cloud Container Instance 2.0": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCI.png",
-    url: "https://console.huaweicloud.com/cci2.0/?locale=en-us"
+    url: buildRegionConsoleUrl("cci2.0")
   },
   "Simple Message Notification": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/SMN.png",
-    url: "https://console.huaweicloud.com/smn/?locale=en-us"
+    url: buildRegionConsoleUrl("smn")
   },
   "Identity and Access Management": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/IAM.png",
-    url: "https://console.huaweicloud.com/iam/?locale=en-us"
+    url: buildRegionConsoleUrl("iam")
   },
   "Cloud Backup and Recovery": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Storage/CBR.png",
-    url: "https://console.huaweicloud.com/cbr/?locale=en-us"
+    url: buildRegionConsoleUrl("cbr")
   },
   "Cloud Eye": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/ManagementGovernance/CES.png",
-    url: "https://console.huaweicloud.com/ces/?locale=en-us"
+    url: buildRegionConsoleUrl("ces")
   },
   "Distributed Cache Service (for Redis)": {
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Middleware/Redis.png",
-    url: "https://console.huaweicloud.com/dcs/?locale=en-us"
+    url: buildRegionConsoleUrl("dcs")
   }
 };
 
@@ -234,7 +242,7 @@ function toServiceConsolePath(service) {
 
 function buildDefaultServiceUrl(service) {
   const pathToken = toServiceConsolePath(service);
-  return `https://console.huaweicloud.com/${pathToken}/?locale=en-us`;
+  return buildRegionConsoleUrl(pathToken);
 }
 
 function buildDefaultIcon(service) {
