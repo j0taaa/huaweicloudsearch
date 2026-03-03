@@ -24,6 +24,10 @@
   const maxResults = 8;
   const usageStorageKey = "hwQuickSearchUsage";
   const recentStorageKey = "hwQuickSearchRecent";
+  const settingsStorageKey = "hwQuickSearchSettings";
+  const defaultSettings = {
+    showRegionSuggestions: true
+  };
 
   const overlay = document.createElement("div");
   overlay.className = "hw-quicksearch-overlay";
@@ -34,6 +38,7 @@
         <input type="text" class="hw-quicksearch-input" placeholder="Search Huawei Cloud services..." aria-label="Search Huawei Cloud services" />
       </div>
       <ul class="hw-quicksearch-list" role="listbox"></ul>
+      <div class="hw-quicksearch-config" aria-live="polite"></div>
       <div class="hw-quicksearch-footer">Use ↑ ↓ to navigate • Enter to open • Esc to close</div>
     </div>
   `;
@@ -42,12 +47,21 @@
 
   const input = overlay.querySelector(".hw-quicksearch-input");
   const list = overlay.querySelector(".hw-quicksearch-list");
+  const configPanel = overlay.querySelector(".hw-quicksearch-config");
   const modal = overlay.querySelector(".hw-quicksearch-modal");
 
   let isOpen = false;
   let selectedIndex = 0;
   let filtered = [];
   const currentRegionContext = getCurrentRegionContext();
+  let settings = getSettings();
+
+  const configurationItem = {
+    type: "configuration",
+    score: 0,
+    label: "Configuration",
+    keywords: ["configuration", "config", "settings", "preferences"]
+  };
 
   function readJsonStorage(key, fallbackValue) {
     try {
@@ -73,7 +87,27 @@
       return `region:${item.region.id}`;
     }
 
+    if (item.type === "configuration") {
+      return "configuration";
+    }
+
     return `service:${item.service.shortName}`;
+  }
+
+  function getSettings() {
+    const stored = readJsonStorage(settingsStorageKey, defaultSettings);
+    return {
+      ...defaultSettings,
+      ...stored
+    };
+  }
+
+  function saveSettings(nextSettings) {
+    settings = {
+      ...defaultSettings,
+      ...nextSettings
+    };
+    writeJsonStorage(settingsStorageKey, settings);
   }
 
   function getUsageMap() {
@@ -108,13 +142,17 @@
     }
 
     if (itemKey.startsWith("region:")) {
-      if (!currentRegionContext.canSwitchRegion) return null;
+      if (!canShowRegionSuggestions()) return null;
       const regionId = itemKey.replace("region:", "");
       if (regionId === currentRegionContext.currentRegionId) return null;
       const region = regions.find((entry) => entry.id === regionId);
       if (!region) return null;
       const url = buildRegionSwitchUrl(region.id);
       return url ? { type: "region", score: 0, region, url } : null;
+    }
+
+    if (itemKey === "configuration") {
+      return configurationItem;
     }
 
     return null;
@@ -164,6 +202,21 @@
     if (keywords.includes(query)) score += 60;
 
     return score;
+  }
+
+  function scoreConfiguration(item, query) {
+    if (!query) return 0;
+    const normalizedQuery = tokenize(query);
+    const searchable = [item.label, ...(item.keywords || [])].map(tokenize);
+
+    if (searchable.some((entry) => entry === normalizedQuery)) return 180;
+    if (searchable.some((entry) => entry.startsWith(normalizedQuery))) return 120;
+    if (searchable.some((entry) => entry.includes(normalizedQuery))) return 90;
+    return 0;
+  }
+
+  function canShowRegionSuggestions() {
+    return currentRegionContext.canSwitchRegion && settings.showRegionSuggestions;
   }
 
   function getCurrentRegionContext() {
@@ -220,7 +273,7 @@
       .filter((entry) => entry.score > 0)
       .map((entry) => ({ type: "service", score: entry.score, service: entry.service }));
 
-    const regionMatches = currentRegionContext.canSwitchRegion
+    const regionMatches = canShowRegionSuggestions()
       ? regions
           .filter((region) => region.id !== currentRegionContext.currentRegionId)
           .map((region) => {
@@ -235,7 +288,12 @@
           .filter((entry) => entry.score > 0 && entry.url)
       : [];
 
-    return [...serviceMatches, ...regionMatches]
+    const configurationScore = scoreConfiguration(configurationItem, query);
+    const configurationMatches = configurationScore > 0
+      ? [{ ...configurationItem, score: configurationScore }]
+      : [];
+
+    return [...serviceMatches, ...regionMatches, ...configurationMatches]
       .sort(
         (a, b) =>
           b.score - a.score ||
@@ -250,7 +308,50 @@
       return `${item.region.name} ${item.region.id}`;
     }
 
+    if (item.type === "configuration") {
+      return item.label;
+    }
+
     return item.service.name;
+  }
+
+  function hideConfigurationPanel() {
+    configPanel.classList.remove("open");
+    configPanel.innerHTML = "";
+  }
+
+  function renderConfigurationPanel() {
+    configPanel.innerHTML = `
+      <div class="hw-quicksearch-config-title">Configuration</div>
+      <label class="hw-quicksearch-config-option">
+        <input class="hw-quicksearch-config-checkbox" type="checkbox" ${settings.showRegionSuggestions ? "checked" : ""} />
+        <span>Show region suggestions in search results</span>
+      </label>
+      <button class="hw-quicksearch-config-button" type="button">Clear usage and recent history</button>
+    `;
+    configPanel.classList.add("open");
+
+    const checkbox = configPanel.querySelector(".hw-quicksearch-config-checkbox");
+    const clearButton = configPanel.querySelector(".hw-quicksearch-config-button");
+
+    checkbox?.addEventListener("change", (event) => {
+      saveSettings({ showRegionSuggestions: event.target.checked });
+      const query = tokenize(input.value);
+      filtered = query ? findMatches(query) : getRecentItems();
+      if (!query && !filtered.length) filtered = findMatches("");
+      selectedIndex = 0;
+      renderList();
+    });
+
+    clearButton?.addEventListener("click", () => {
+      window.localStorage.removeItem(usageStorageKey);
+      window.localStorage.removeItem(recentStorageKey);
+      const query = tokenize(input.value);
+      filtered = query ? findMatches(query) : getRecentItems();
+      if (!query && !filtered.length) filtered = findMatches("");
+      selectedIndex = 0;
+      renderList();
+    });
   }
 
   function renderList() {
@@ -280,6 +381,17 @@
             </span>
             <span class="hw-quicksearch-name">Switch region to ${itemEntry.region.name}</span>
             <span class="hw-quicksearch-shortname">${itemEntry.region.id}</span>
+          </div>
+          <span class="hw-quicksearch-arrow">↵</span>
+        `;
+      } else if (itemEntry.type === "configuration") {
+        item.innerHTML = `
+          <div class="hw-quicksearch-main">
+            <span class="hw-quicksearch-icon-wrap">
+              <span class="hw-quicksearch-icon-fallback">⚙</span>
+            </span>
+            <span class="hw-quicksearch-name">Configuration</span>
+            <span class="hw-quicksearch-shortname">Settings</span>
           </div>
           <span class="hw-quicksearch-arrow">↵</span>
         `;
@@ -324,6 +436,12 @@
 
   function openItem(itemEntry) {
     trackItemUsage(itemEntry);
+
+    if (itemEntry.type === "configuration") {
+      renderConfigurationPanel();
+      return;
+    }
+
     closePalette();
     if (itemEntry.type === "region") {
       window.location.href = itemEntry.url;
@@ -342,6 +460,7 @@
     if (!filtered.length) {
       filtered = findMatches("");
     }
+    hideConfigurationPanel();
     renderList();
     setTimeout(() => input.focus(), 0);
   }
@@ -349,6 +468,7 @@
   function closePalette() {
     isOpen = false;
     overlay.classList.remove("open");
+    hideConfigurationPanel();
     input.blur();
   }
 
@@ -358,6 +478,7 @@
     if (!query && !filtered.length) {
       filtered = findMatches("");
     }
+    hideConfigurationPanel();
     selectedIndex = 0;
     renderList();
   });
