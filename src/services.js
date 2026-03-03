@@ -206,6 +206,43 @@ const SERVICE_OVERRIDES = {
   }
 };
 
+const SERVICE_URL_ALIASES = {
+  "Distributed Cache Service (for Redis)": "dcs",
+  "Data Lake Insight": "dli",
+  "Data Warehouse Service": "dws",
+  "Virtual Private Cloud": "vpc",
+  "Object Storage Service": "obs",
+  "Simple Message Notification": "smn",
+  "Identity and Access Management": "iam"
+};
+
+function toServiceConsolePath(service) {
+  if (SERVICE_URL_ALIASES[service.name]) {
+    return SERVICE_URL_ALIASES[service.name];
+  }
+
+  const shortNameToken = (service.shortName || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
+
+  if (shortNameToken) {
+    return shortNameToken;
+  }
+
+  return service.name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function buildDefaultServiceUrl(service) {
+  const pathToken = toServiceConsolePath(service);
+  return `https://console.huaweicloud.com/${pathToken}/?locale=en-us`;
+}
+
+function buildDefaultIcon(service) {
+  const label = (service.shortName || service.name || "?").trim().slice(0, 2).toUpperCase();
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#e5eefc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1d4ed8" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="700">${label}</text></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
 const HUAWEI_CLOUD_SERVICES = SERVICE_CATALOG.map((service) => {
   const override = SERVICE_OVERRIDES[service.name] || {};
 
@@ -213,8 +250,8 @@ const HUAWEI_CLOUD_SERVICES = SERVICE_CATALOG.map((service) => {
     name: service.name,
     shortName: service.shortName,
     keywords: service.keywords,
-    iconUrl: override.iconUrl || "",
-    url: override.url || "https://console.huaweicloud.com/?locale=en-us"
+    iconUrl: override.iconUrl || buildDefaultIcon(service),
+    url: override.url || buildDefaultServiceUrl(service)
   };
 });
 
