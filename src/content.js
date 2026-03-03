@@ -287,7 +287,7 @@
         item.innerHTML = `
           <div class="hw-quicksearch-main">
             <span class="hw-quicksearch-icon-wrap">
-              ${service.iconUrl ? `<img class="hw-quicksearch-service-icon" src="${service.iconUrl}" alt="${service.shortName} icon" loading="lazy" referrerpolicy="no-referrer" />` : ""}
+              ${service.iconUrl ? `<img class="hw-quicksearch-service-icon" src="${service.iconUrl}" alt="${service.shortName} icon" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />` : ""}
               <span class="hw-quicksearch-icon-fallback">${service.shortName.slice(0, 1)}</span>
             </span>
             <span class="hw-quicksearch-name">${service.name}</span>
