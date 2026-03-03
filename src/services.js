@@ -32,7 +32,14 @@ const HUAWEI_CLOUD_SERVICES = [
     shortName: "CCE",
     keywords: ["kubernetes", "containers", "cluster"],
     iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCE.png",
-    url: "https://console.huaweicloud.com/cce/?locale=en-us"
+    url: "https://console.huaweicloud.com/cce2.0/?locale=en-us"
+  },
+  {
+    name: "Cloud Container Instance",
+    shortName: "CCI",
+    keywords: ["serverless", "containers", "kubernetes"],
+    iconUrl: "https://res-static.hc-cdn.cn/cloudbu-site/public/new-product-icon/Containers/CCI.png",
+    url: "https://console.huaweicloud.com/cci/?locale=en-us"
   },
   {
     name: "Simple Message Notification",
