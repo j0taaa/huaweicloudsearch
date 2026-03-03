@@ -10,6 +10,8 @@ A Chrome extension that adds a Raycast-style command bar to Huawei Cloud pages.
 - Search regions (for example, `santiago`, `sao paulo`) to switch the current page to another region.
 - Region suggestions only appear when the current console page is region-aware (global pages keep service-only results).
 - Shows Huawei Cloud official product icons in search results.
+- Search for **Configuration** to open the built-in configuration panel.
+- Configure whether region suggestions are shown and clear quick-search history.
 - Hit **Enter** to navigate directly to the selected Huawei Cloud service page.
 
 ## Install locally
