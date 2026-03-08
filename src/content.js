@@ -166,6 +166,71 @@
     return (text || "").toLowerCase().trim();
   }
 
+  function normalizeForFuzzy(text) {
+    return tokenize(text)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "");
+  }
+
+  function levenshteinWithinLimit(source, target, limit) {
+    const sourceLength = source.length;
+    const targetLength = target.length;
+    if (Math.abs(sourceLength - targetLength) > limit) return Number.POSITIVE_INFINITY;
+
+    const previousRow = Array(targetLength + 1)
+      .fill(0)
+      .map((_, index) => index);
+
+    for (let i = 1; i <= sourceLength; i += 1) {
+      let currentRow = [i];
+      let minInRow = currentRow[0];
+
+      for (let j = 1; j <= targetLength; j += 1) {
+        const substitutionCost = source[i - 1] === target[j - 1] ? 0 : 1;
+        const insertions = currentRow[j - 1] + 1;
+        const deletions = previousRow[j] + 1;
+        const substitutions = previousRow[j - 1] + substitutionCost;
+        const value = Math.min(insertions, deletions, substitutions);
+
+        currentRow.push(value);
+        if (value < minInRow) minInRow = value;
+      }
+
+      if (minInRow > limit) return Number.POSITIVE_INFINITY;
+
+      for (let j = 0; j <= targetLength; j += 1) {
+        previousRow[j] = currentRow[j];
+      }
+    }
+
+    return previousRow[targetLength];
+  }
+
+  function getFuzzyScore(query, candidates) {
+    const normalizedQuery = normalizeForFuzzy(query);
+    if (normalizedQuery.length < 3) return 0;
+
+    const maxDistance = normalizedQuery.length <= 4 ? 1 : 2;
+    let bestScore = 0;
+
+    candidates.forEach((candidate) => {
+      const normalizedCandidate = normalizeForFuzzy(candidate);
+      if (!normalizedCandidate) return;
+
+      const distance = levenshteinWithinLimit(normalizedQuery, normalizedCandidate, maxDistance);
+      if (!Number.isFinite(distance)) return;
+
+      const proximityBonus = Math.max(0, 8 - Math.abs(normalizedCandidate.length - normalizedQuery.length));
+      const fuzzyScore = (maxDistance - distance + 1) * 15 + proximityBonus;
+      if (fuzzyScore > bestScore) {
+        bestScore = fuzzyScore;
+      }
+    });
+
+    return bestScore;
+  }
+
   function scoreService(service, query) {
     if (!query) return 1;
 
@@ -181,6 +246,15 @@
     if (name.includes(query)) score += 50;
     if (shortName.includes(query)) score += 40;
     if (keywords.includes(query)) score += 20;
+
+    const fuzzyCandidates = [
+      shortName,
+      name,
+      ...(service.keywords || []),
+      ...name.split(/\s+/),
+      ...shortName.split(/\s+/)
+    ];
+    score += getFuzzyScore(query, fuzzyCandidates);
 
     return score;
   }
@@ -200,6 +274,9 @@
     if (name.includes(query)) score += 80;
     if (id.includes(query)) score += 70;
     if (keywords.includes(query)) score += 60;
+
+    const fuzzyCandidates = [id, name, ...(region.keywords || []), ...name.split(/\s+/), ...id.split(/-/)];
+    score += getFuzzyScore(query, fuzzyCandidates);
 
     return score;
   }
